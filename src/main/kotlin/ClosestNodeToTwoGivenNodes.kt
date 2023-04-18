@@ -1,15 +1,15 @@
-//:< Not working!!
+// Runtime: 589ms beats 50%, Memory: 56.3MB beats 66.67%
 class ClosestNodeToTwoGivenNodes {
     fun bfs(dist:Array<Int>,edges:IntArray,node:Int){
-        var boolArray = Array(edges.size){false}
+        val boolArray = Array(edges.size){false}
         var presentNode = node
         dist[node] = 0
-        while(node!=-909){
-            if(boolArray[node]){
-                continue
+        while(presentNode!=-909){
+            if(boolArray[presentNode]){
+                break
             }else{
-                boolArray[node]=true;
-                val neighbor =edges[node]
+                boolArray[presentNode]=true
+                val neighbor =edges[presentNode]
                 if(neighbor!=-1 && !boolArray[neighbor]){
                     dist[neighbor]=1+dist[presentNode]
                     presentNode=neighbor
@@ -21,8 +21,8 @@ class ClosestNodeToTwoGivenNodes {
     }
 
     fun closestMeetingNode(edges: IntArray, node1: Int, node2: Int): Int {
-        var dist1: Array<Int> = Array(edges.size){-27}
-        var dist2: Array<Int> = Array(edges.size){-27}
+        val dist1: Array<Int> = Array(edges.size){-27}
+        val dist2: Array<Int> = Array(edges.size){-27}
         bfs(dist1,edges,node1)
         bfs(dist2,edges,node2)
         var resultNode=-1
@@ -31,7 +31,7 @@ class ClosestNodeToTwoGivenNodes {
             if(dist1[i]==-27 || dist2[i]==-27){
                 continue
             }else{
-                val tempMax = dist1[i].coerceAtLeast(dist2[i])
+                val tempMax = dist1[i].coerceAtLeast(dist2[i]);
                 if(tempMax<maxTillNow){
                     resultNode=i
                     maxTillNow = tempMax
@@ -40,6 +40,10 @@ class ClosestNodeToTwoGivenNodes {
         }
         return resultNode
     }
-
-
+}
+fun main(){
+    val arr:IntArray= intArrayOf(2,2,3,-1)
+    val arr2:IntArray = intArrayOf(1,2,-1)
+    println(ClosestNodeToTwoGivenNodes().closestMeetingNode(arr,0,1))
+    println(ClosestNodeToTwoGivenNodes().closestMeetingNode(arr2,0,2))
 }
